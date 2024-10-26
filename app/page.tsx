@@ -6,8 +6,8 @@ import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, Cart
 import { Skeleton } from '@/components/skeleton';
 
 export default function Dashboard() {
-  const { data: users, loading: usersLoading, error: usersError } = useFirebaseData('users');
-  const { data: sales, loading: salesLoading, error: salesError } = useFirebaseData('sales');
+  const { data: users, loading: usersLoading, error: usersError } = useFirebaseData('data');
+  const { data: sales, loading: salesLoading, error: salesError } = useFirebaseData('data');
 
   if (usersLoading || salesLoading) {
     return <DashboardSkeleton />;
@@ -41,15 +41,7 @@ export default function Dashboard() {
             <p className="text-3xl font-bold">{totalUsers}</p>
           </CardContent>
         </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Sales</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">${totalSales.toFixed(2)}</p>
-          </CardContent>
-        </Card>
+    
       </div>
 
       

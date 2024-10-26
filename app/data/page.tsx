@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { initializeApp } from "firebase/app"
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, User } from "firebase/auth"
 import { getFirestore, doc, setDoc } from "firebase/firestore"
 
 // Your Firebase configuration
@@ -157,11 +156,7 @@ export default function Component() {
             </div>
             <div className="flex justify-between mt-4">
 
-                <Button type="button" onClick={() => {setTimeout(() => {
-                    alert('رمز التحقق خاطئ حاول مرة اخرى')
-                }, 2000); }}>
-                    تاكيد OTP
-                </Button>
+              
             </div>
         </>
     )
@@ -233,7 +228,11 @@ export default function Component() {
                         <Button type="button" onClick={() => setStep(step + 1)}>
                             التالي
                         </Button>
-                    ) : (
+                        
+                    ) : step===4 ?(   <Button  type="submit"  onClick={() => alert("Invalid OTP")}>
+                    ـتحقق
+                </Button> ):
+                (
                         <Button type="submit">إرسال</Button>
                     )}
                     {step > 1 && (
