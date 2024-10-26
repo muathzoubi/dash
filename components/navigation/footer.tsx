@@ -10,7 +10,7 @@ export function Footer() {
           &copy; {new Date().getFullYear()}{" "}
           <Link
             className="font-semibold"
-            href={Company.link}
+            href='#'
           >
     جميع الحقوق محفوظة
           </Link>

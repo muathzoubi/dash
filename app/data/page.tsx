@@ -74,7 +74,7 @@ export default function Component() {
                 <Input
                     id="name"
                     placeholder="محمد أحمد"
-                    value={formData.personalInfo.name}
+                    defaultValue={formData.personalInfo.name}
                     onChange={(e) => updateFormData("personalInfo", "name", e.target.value)}
                 />
             </div>
@@ -84,7 +84,7 @@ export default function Component() {
                     id="email"
                     type="email"
                     placeholder="mohammed@example.com"
-                    value={formData.personalInfo.email}
+                    defaultValue={formData.personalInfo.email}
                     onChange={(e) => updateFormData("personalInfo", "email", e.target.value)}
                 />
             </div>
@@ -94,7 +94,7 @@ export default function Component() {
                     id="phone"
                     type="tel"
                     placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
-                    value={formData.personalInfo.phone}
+                    defaultValue={formData.personalInfo.phone}
                     onChange={(e) => updateFormData("personalInfo", "phone", e.target.value)}
                 />
             </div>
@@ -108,7 +108,7 @@ export default function Component() {
                 <Input
                     id="street"
                     placeholder="١٢٣ شارع الرئيسي"
-                    value={formData.address.street}
+                    defaultValue={formData.address.street}
                     onChange={(e) => updateFormData("address", "street", e.target.value)}
                 />
             </div>
@@ -117,7 +117,7 @@ export default function Component() {
                 <Input
                     id="city"
                     placeholder="الرياض"
-                    value={formData.address.city}
+                    defaultValue={formData.address.city}
                     onChange={(e) => updateFormData("address", "city", e.target.value)}
                 />
             </div>
@@ -126,7 +126,7 @@ export default function Component() {
                 <Input
                     id="state"
                     placeholder="الرياض"
-                    value={formData.address.state}
+                    defaultValue={formData.address.state}
                     onChange={(e) => updateFormData("address", "state", e.target.value)}
                 />
             </div>
@@ -135,7 +135,7 @@ export default function Component() {
                 <Input
                     id="zipCode"
                     placeholder="١٢٣٤٥"
-                    value={formData.address.zipCode}
+                    defaultValue={formData.address.zipCode}
                     onChange={(e) => updateFormData("address", "zipCode", e.target.value)}
                 />
             </div>
@@ -148,7 +148,7 @@ export default function Component() {
                 <Input
                     id="otp"
                     placeholder=" OTP ادخل الرمز المرسل "
-                    value={formData.otp.otp}
+                    defaultValue={formData.otp.otp}
                     onChange={(e) => updateFormData("otp", "otp", e.target.value)}
                 />
             </div>
@@ -167,8 +167,9 @@ export default function Component() {
                 <Input
                     id="cardNumber"
                     placeholder="١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦"
-                    value={formData.payment.cardNumber}
+                    defaultValue={formData.payment.cardNumber}
                     onChange={(e) => updateFormData("payment", "cardNumber", e.target.value)}
+                    autoFocus
                 />
             </div>
             <div className="space-y-2">
@@ -176,7 +177,7 @@ export default function Component() {
                 <Input
                     id="expiry"
                     placeholder="شهر/سنة"
-                    value={formData.payment.expiry}
+                    defaultValue={formData.payment.expiry}
                     onChange={(e) => updateFormData("payment", "expiry", e.target.value)}
                 />
             </div>
@@ -185,7 +186,7 @@ export default function Component() {
                 <Input
                     id="cvc"
                     placeholder="١٢٣"
-                    value={formData.payment.cvc}
+                    defaultValue={formData.payment.cvc}
                     onChange={(e) => updateFormData("payment", "cvc", e.target.value)}
                 />
             </div>
