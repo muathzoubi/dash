@@ -12,7 +12,7 @@ export function Footer() {
             className="font-semibold"
             href={Company.link}
           >
-            {Company.name}
+    جميع الحقوق محفوظة
           </Link>
           .
         </p>
