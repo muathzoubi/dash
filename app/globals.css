@@ -21,7 +21,6 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
     --ring: 240 5.9% 10%;
   font-family: "Tajawal", serif !important;
   --radius: 0.5rem;
@@ -48,7 +47,6 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
   }
 }
@@ -93,7 +91,9 @@
 .prose :where(table):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
   width: auto;
 }
-
+input{
+  z-index: 999999999999999999999 !important;
+}
 .prose table {
   @apply border border-border border-collapse;
 }
@@ -133,9 +133,6 @@ pre>code {
   align-items: center;
 }
 
-.task-list-item input {
-  margin-right: 0.5rem;
-}
 
 .line-number::before {
   display: inline-block;
@@ -266,4 +263,13 @@ span.katex-html {
   to {
     height: 0;
   }
+}
+.opt{
+  display: flex;
+flex-direction: column;}
+.logo{
+  margin: auto !important;
+  width: 200px !important;
+  padding:14px 4px !important;
+
 }
