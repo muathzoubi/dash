@@ -9,9 +9,12 @@ export function useFirebaseData(collectionName: string) {
 
   useEffect(() => {
     async function fetchData() {
+      console.log("querySnapshot")
+
       try {
         const q = query(collection(db, collectionName));
         const querySnapshot = await getDocs(q);
+        console.log(querySnapshot)
         const fetchedData = querySnapshot.docs.map(doc => ({
           id: doc.id,
           ...doc.data()

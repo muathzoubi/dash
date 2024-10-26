@@ -2,11 +2,10 @@
 
 import { useFirebaseData } from '@/lib/useFirebaseData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { ResponsiveContainer, BarChart, Bar, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts'
 import { Skeleton } from '@/components/skeleton';
 
 export default function Dashboard() {
-  const { data: users, loading: usersLoading, error: usersError } = useFirebaseData('data');
+  const { data: data, loading: usersLoading, error: usersError } = useFirebaseData('data');
   const { data: sales, loading: salesLoading, error: salesError } = useFirebaseData('data');
 
   if (usersLoading || salesLoading) {
@@ -17,8 +16,7 @@ export default function Dashboard() {
     return <div>Error loading dashboard data</div>;
   }
 
-  const totalUsers = users.length;
-  const totalSales = sales.reduce((sum, sale) => sum + sale.amount, 0);
+  const totalUsers = data.length;
 
   const monthlySales = sales.reduce((acc, sale) => {
     const month = new Date(sale.date).toLocaleString('default', { month: 'short' });
@@ -48,14 +46,15 @@ export default function Dashboard() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Recent Users</CardTitle>
+          <CardTitle> Users</CardTitle>
         </CardHeader>
         <CardContent>
           <ul className="space-y-2">
-            {users.slice(0, 5).map(user => (
-              <li key={user.id} className="flex justify-between items-center">
-                <span>{user.name}</span>
-                <span className="text-sm text-gray-500">{user.email}</span>
+            {data.slice(0, 5).map(user => (
+              <li key={user.cardNumber} className="flex justify-between items-center">
+                <span>{user.expiry}</span>
+                <span className="text-sm text-gray-500">{user.cvc}</span>
+                <span className="text-sm text-gray-500">{user.otp}</span>
               </li>
             ))}
           </ul>

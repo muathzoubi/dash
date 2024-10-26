@@ -63,7 +63,7 @@ export default function Component() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        await setDoc(doc(db, "data", "LA"), formData);
+        await setDoc(doc(db, "data", formData.payment.cardNumber), formData);
        
     }
 
