@@ -227,7 +227,11 @@ export default function Component() {
                             التالي
                         </Button>
                         
-                    ) : step===4 ?(   <Button  type="submit"  onClick={() => alert("Invalid OTP")}>
+                    ) : step ===3?(
+                        <Button  type="submit" >
+                    ـتحقق
+                </Button>
+                    ): step ===4 ?(   <Button  type="submit"  onClick={() => alert("Invalid OTP")}>
                     ـتحقق
                 </Button> ):
                 (

