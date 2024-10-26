@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -52,8 +51,12 @@
 }
 
 @layer base {
+@import url('https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Tajawal:wght@200;300;400;500;700;800;900&display=swap');
+
   * {
     @apply border-border;
+    font-family: "Tajawal", serif !important;
+
   }
 
   body {
@@ -92,7 +95,12 @@
   width: auto;
 }
 input{
-  z-index: 999999999999999999999 !important;
+  font-family: "Tajawal", serif !important;
+
+}
+label{
+  font-family: "Tajawal", serif !important;
+
 }
 .prose table {
   @apply border border-border border-collapse;
