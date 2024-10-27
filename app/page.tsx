@@ -9,13 +9,13 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBalb45hYmw3rGK3kn5Skp2Wb4Ci3yeKHc",
-  authDomain: "adsapp-for.firebaseapp.com",
-  projectId: "adsapp-for",
-  storageBucket: "adsapp-for.appspot.com",
-  messagingSenderId: "282166621415",
-  appId: "1:282166621415:web:2be67338bc64233153de42",
-  measurementId: "G-PG5NPD4FES"
+  apiKey: "AIzaSyC-fR9vsFJ0gyOcysg5SG5DMtATNzTyW1c",
+  authDomain: "exam-app-2ec1d.firebaseapp.com",
+  projectId: "exam-app-2ec1d",
+  storageBucket: "exam-app-2ec1d.appspot.com",
+  messagingSenderId: "116559499407",
+  appId: "1:116559499407:web:8c5ecf129f5c437e3ea0fa",
+  measurementId: "G-MY09H839C3"
 };
 type User = {
   id:string,

