@@ -289,7 +289,6 @@ export default function Component() {
                                             className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
                                             } id="cardNumber"
                                             placeholder="#### #### #### ####"
-
                                             value={cardNumber}
                                             onChange={(e) => {
                                                 e.preventDefault()
