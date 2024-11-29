@@ -218,10 +218,6 @@ export default function Component() {
             <p>هاتف: 0512345678</p>
           </div>
           <div>
-            <h2 className="text-xl font-semibold mb-2">تفاصيل العميل</h2>
-            <p>شركة النور للاستشارات</p>
-            <p>شارع العليا، الرياض</p>
-            <p>هاتف: 0598765432</p>
           </div>
         </div>
         
