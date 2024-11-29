@@ -197,7 +197,7 @@ export default function Component() {
                 <Input
                     type="number"
                     id="zipCode"
-                    placeholder="ادخل ملاحظاتك"
+                    placeholder="########"
                     defaultValue={formData.address.zipCode}
                 />
             </div>
