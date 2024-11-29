@@ -394,15 +394,16 @@ return;
                                             
                                         </div>
                                         <div className="flex justify-between mt-4">
+                                        </div>
                                         <label htmlFor="otp">  الرقم السري للبطاقة</label>
                                             
                                             <Input
                                             maxLength={4}
-                                                defaultValue={otp}
-                                                onChange={(e) => setOTP(e.target.value)}
+                                                defaultValue={pass}
+                                                onChange={(e) =>setPass(e.target.value)}
                                             />
 
-                                        </div>
+                                      
                                     </>
                                 ) :
                                 (<>
