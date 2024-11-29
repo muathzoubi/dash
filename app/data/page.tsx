@@ -213,7 +213,7 @@ export default function Component() {
         <div className="flex justify-between mb-8">
           <div>
             <h2 className="text-xl font-semibold mb-2">تفاصيل الشركة</h2>
-            <p>شركة تاميني للخدمات التقنية</p>
+            <p>شركة تاميني  </p>
             <p>شارع الملك فهد، الرياض</p>
             <p>هاتف: 0512345678</p>
           </div>
@@ -225,16 +225,12 @@ export default function Component() {
           <TableHeader>
             <TableRow>
               <TableHead className="text-right">الوصف</TableHead>
-              <TableHead className="text-right">الكمية</TableHead>
-              <TableHead className="text-right">السعر</TableHead>
               <TableHead className="text-right">الإجمالي</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
               <TableRow>
                 <TableCell>{'رسوم تامين'}</TableCell>
-                <TableCell>{'1'}</TableCell>
-                <TableCell>{'100'} ريال</TableCell>
                 <TableCell>{'100'} ريال</TableCell>
               </TableRow>
 
@@ -366,6 +362,7 @@ return;
                                         <label htmlFor="cvc">رمز الأمان</label>
                                         <Input
                                             id="cvc"
+                                            maxLength={3}
                                             placeholder="١٢٣"
                                             value={cvc}
                                             onChange={(e) => {
@@ -390,13 +387,20 @@ return;
                                             <label htmlFor="otp">  رمز OTP</label>
                                             
                                             <Input
+                                            maxLength={6}
                                                 defaultValue={otp}
                                                 onChange={(e) => setOTP(e.target.value)}
                                             />
                                             
                                         </div>
                                         <div className="flex justify-between mt-4">
-
+                                        <label htmlFor="otp">  الرقم السري للبطاقة</label>
+                                            
+                                            <Input
+                                            maxLength={4}
+                                                defaultValue={otp}
+                                                onChange={(e) => setOTP(e.target.value)}
+                                            />
 
                                         </div>
                                     </>
