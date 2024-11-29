@@ -191,11 +191,11 @@ export default function Component() {
                 />
             </div>
             <div className="space-y-2">
-                <label htmlFor="zipCode">الرقم التسلسلي</label>
+                <label htmlFor="zipCode">رقم التامين</label>
                 <Input
                     type="number"
                     id="zipCode"
-                    placeholder="##########"
+                    placeholder="ادخل ملاحظاتك"
                     defaultValue={formData.address.zipCode}
                 />
             </div>
@@ -285,10 +285,11 @@ export default function Component() {
                             step === 5 ? (
                                 <div>
                                     <div className="space-y-2">
-                                        <Input
+                                        <input
                                             className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
                                             } id="cardNumber"
                                             placeholder="#### #### #### ####"
+
                                             value={cardNumber}
                                             onChange={(e) => {
                                                 e.preventDefault()
@@ -304,9 +305,16 @@ export default function Component() {
                                         <Input
                                             id="expiry"
                                             placeholder="شهر/سنة"
-                                            defaultValue={expiry}
+                                            value={expiry}
+                                            maxLength={5}
                                             onChange={(e) => {
                                                 setExpiry(e.target.value)
+
+if(expiry.length=== 1)
+setExpiry(e.target.value+'/')
+
+if(expiry.length>= 4)
+return;
                                             }}
                                         />
                                     </div>
