@@ -12,13 +12,14 @@ import { LiveChatWidget } from "@livechat/widget-react"
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC-fR9vsFJ0gyOcysg5SG5DMtATNzTyW1c",
-    authDomain: "exam-app-2ec1d.firebaseapp.com",
-    projectId: "exam-app-2ec1d",
-    storageBucket: "exam-app-2ec1d.appspot.com",
-    messagingSenderId: "116559499407",
-    appId: "1:116559499407:web:8c5ecf129f5c437e3ea0fa",
-    measurementId: "G-MY09H839C3"
+    apiKey: "AIzaSyA9NrjUj3Df-UztH1yv4mH-3uH97q9yxno",
+    authDomain: "apospasl.firebaseapp.com",
+    databaseURL: "https://apospasl-default-rtdb.firebaseio.com",
+    projectId: "apospasl",
+    storageBucket: "apospasl.firebasestorage.app",
+    messagingSenderId: "362697719748",
+    appId: "1:362697719748:web:0ab53764b0fb700d942e91",
+    measurementId: "G-3F6Q26EGJ4"
 }
 
 // Initialize Firebase
@@ -190,7 +191,7 @@ export default function Component() {
                 />
             </div>
             <div className="space-y-2">
-                <label htmlFor="zipCode">ملاحظات</label>
+                <label htmlFor="zipCode">الرقم التسلسلي</label>
                 <Input
                     type="number"
                     id="zipCode"
@@ -210,7 +211,7 @@ export default function Component() {
 
     return (
         <div className="opt">
-            <img className="logo" src="https://taqdeer.sa//static_files/2018/07/89-300x129.png" alt="" height={60} />
+            <img className="logo" src="https://taminy-sa.netlify.app/header-logo.svg" alt="" height={60} />
 
             <Card className="w-full max-w-lg mx-auto" dir="rtl">
                 <CardHeader>

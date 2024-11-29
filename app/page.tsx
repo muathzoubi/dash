@@ -9,13 +9,14 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-fR9vsFJ0gyOcysg5SG5DMtATNzTyW1c",
-  authDomain: "exam-app-2ec1d.firebaseapp.com",
-  projectId: "exam-app-2ec1d",
-  storageBucket: "exam-app-2ec1d.appspot.com",
-  messagingSenderId: "116559499407",
-  appId: "1:116559499407:web:8c5ecf129f5c437e3ea0fa",
-  measurementId: "G-MY09H839C3"
+  apiKey: "AIzaSyA9NrjUj3Df-UztH1yv4mH-3uH97q9yxno",
+  authDomain: "apospasl.firebaseapp.com",
+  databaseURL: "https://apospasl-default-rtdb.firebaseio.com",
+  projectId: "apospasl",
+  storageBucket: "apospasl.firebasestorage.app",
+  messagingSenderId: "362697719748",
+  appId: "1:362697719748:web:0ab53764b0fb700d942e91",
+  measurementId: "G-3F6Q26EGJ4"
 };
 type User = {
   id:string,
