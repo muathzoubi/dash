@@ -1,7 +1,7 @@
 export const url = "https://rubix-documents.vercel.app";
 export const siteicon = "/icon.png";
 
-export const gtm = "GTM-XXXXXXX";
+export const gtm = "G-3F6Q26EGJ4";
 export const gtmconnected = true;
 
 export const sitename = "Documents";
