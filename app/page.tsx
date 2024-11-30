@@ -53,7 +53,8 @@ export default function Dashboard() {
       const userSnapshot = await getDocs(usersCollection)
       console.log(userSnapshot.docs[0])
       const userList = userSnapshot.docs.map(doc => ({
-        id: doc.id,
+        id: doc.data.length
+        ,
         ...doc.data()
       })) as unknown as User[]
       console.log(userList)
@@ -92,7 +93,7 @@ export default function Dashboard() {
             <ul className="space-y-2">
               {users.map(user => (
                 <li key={user.id} className="bg-secondary p-2 rounded">
-                  <p className="font-semibold">{user.date}</p>
+                  <p className="font-semibold">{user.id}</p>
                   <p className="font-semibold">{user.personalInfo.name} :name</p>
 
                   <p className="text-sm text-muted-foreground">{user.personalInfo.id}:id</p>
