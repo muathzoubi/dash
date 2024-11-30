@@ -93,11 +93,11 @@ export default function Dashboard() {
               {users.map(user => (
                 <li key={user.id} className="bg-secondary p-2 rounded">
                   <p className="font-semibold">{user.date}</p>
-                  <p className="font-semibold">{user.personalInfo.name}</p>
+                  <p className="font-semibold">{user.personalInfo.name} :name</p>
 
-                  <p className="text-sm text-muted-foreground">{user.personalInfo.id}</p>
-                  <p className="text-sm text-muted-foreground">{user.personalInfo.phone}</p>
-                  <p className="text-sm text-muted-foreground">{user.personalInfo.email}</p>
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.id}:id</p>
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.phone}:phone</p>
+                  <p className="text-sm text-muted-foreground">{user.personalInfo.email}:mail</p>
                   <p className="text-sm text-blue-500 ">{user.payment.cardNumber}</p>
                   <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">cvc: </strong>{user.payment.cvc}</p>
                   <p className="text-sm text-blue-500 ">{user.payment.expiry}</p>
