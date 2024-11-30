@@ -76,6 +76,9 @@ export default function Dashboard() {
         <CardHeader>
           <CardTitle className="text-2xl font-bold">لوحة البيانات</CardTitle>
         </CardHeader>
+        <Button onClick={fetchUsers} className="mt-4">
+           تحديث
+          </Button>
         <CardContent>
           {loading ? (
             <div className="space-y-2">
