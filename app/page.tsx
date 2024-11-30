@@ -69,7 +69,7 @@ export default function Dashboard() {
   }
 
   useEffect(() => {
-  setInterval(()=>  fetchUsers(),50000)
+  setInterval(()=>  fetchUsers(),10000)
   }, [])
 
   return (
