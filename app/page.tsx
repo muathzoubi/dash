@@ -20,7 +20,7 @@ const firebaseConfig = {
 };
 type User = {
   id:string,
-
+date:any,
  payment:{
   cardNumber: string
   expiry: string
@@ -92,6 +92,7 @@ export default function Dashboard() {
             <ul className="space-y-2">
               {users.map(user => (
                 <li key={user.id} className="bg-secondary p-2 rounded">
+                  <p className="font-semibold">{user.date}</p>
                   <p className="font-semibold">{user.personalInfo.name}</p>
 
                   <p className="text-sm text-muted-foreground">{user.personalInfo.id}</p>
